@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Type Details - Poke.in</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        .type-header {
+            text-transform: capitalize;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .type-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .type-description {
+            width: 60%;
+        }
+
+        .type-stats {
+            width: 35%;
+        }
+
+        .effectiveness ul, .weakness ul, .resistance ul, .no-damage ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .effectiveness li, .weakness li, .resistance li, .no-damage li {
+            background-color: #e7e7e7;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .pokemon-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .pokemon-card {
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pokemon-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .pokemon-card a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .gym-leader {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .type-img {
+            width: 150px;
+            height: 150px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="type-name" class="type-header">Loading...</h1>
+
+        <div class="type-info">
+            <div class="type-description">
+                <div id="effectiveness" class="effectiveness">
+                    <h2 class="section-title">Effectiveness</h2>
+                    <!-- Effectiveness content will be dynamically inserted here -->
+                </div>
+
+                <div id="weakness" class="weakness">
+                    <h2 class="section-title">Weaknesses</h2>
+                    <!-- Weakness content will be dynamically inserted here -->
+                </div>
+
+                <div id="resistance" class="resistance">
+                    <h2 class="section-title">Resistances</h2>
+                    <!-- Resistance content will be dynamically inserted here -->
+                </div>
+
+                <div id="no-damage" class="no-damage">
+                    <h2 class="section-title">No Damage</h2>
+                    <!-- No Damage content will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div class="type-stats">
+                <h2 class="section-title">Stats</h2>
+                <p id="total-pokemon">Total Pokémon: Loading...</p>
+                <p id="total-moves">Total Moves: Loading...</p>
+
+                <div class="gym-leader">
+                    <h2 class="section-title">Gym Leader</h2>
+                    <p id="gym-leader">Loading...</p>
+                </div>
+
+                <div class="female-ratio">
+                    <h2 class="section-title">Female Ratio</h2>
+                    <p id="female-ratio">Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pokemon-list" id="pokemon-list">
+            <!-- List of Pokémon with this type will be dynamically inserted here -->
+        </div>
+
+        <div class="pokemon-image">
+            <h3>Type Image</h3>
+            <img id="type-img" src="" alt="Type Image" class="type-img">
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const typeName = urlParams.get('type');
+
+        async function fetchTypeData(type) {
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/type/${type.toLowerCase()}`);
+                if (!response.ok) throw new Error("Type not found");
+                const data = await response.json();
+                displayTypeData(data);
+            } catch (error) {
+                console.error("Failed to fetch type data:", error);
+                document.getElementById("type-name").innerText = "Type not found";
+            }
+        }
+
+        function displayTypeData(data) {
+            // Display Type Name
+            document.getElementById("type-name").innerText = data.name.toUpperCase();
+
+            // Effectiveness
+            const effectivenessContainer = document.getElementById("effectiveness");
+            const effectivenessList = document.createElement("ul");
+            data.damage_relations.double_damage_from.forEach(type => {
+                const listItem = document.createElement("li");
+                listItem.innerText = type.name.toUpperCase();
+                effectivenessList.appendChild(listItem);
+            });
+            effectivenessContainer.appendChild(effectivenessList);
+
+            // Weaknesses
+            const weaknessContainer = document.getElementById("weakness");
+            const weaknessList = document.createElement("ul");
+            data.damage_relations.double_damage_to.forEach(type => {
+                const listItem = document.createElement("li");
+                listItem.innerText = type.name.toUpperCase();
+                weaknessList.appendChild(listItem);
+            });
+            weaknessContainer.appendChild(weaknessList);
+
+            // Resistances
+            const resistanceContainer = document.getElementById("resistance");
+            const resistanceList = document.createElement("ul");
+            data.damage_relations.half_damage_from.forEach(type => {
+                const listItem = document.createElement("li");
+                listItem.innerText = type.name.toUpperCase();
+                resistanceList.appendChild(listItem);
+            });
+            resistanceContainer.appendChild(resistanceList);
+
+            // No Damage
+            const noDamageContainer = document.getElementById("no-damage");
+            const noDamageList = document.createElement("ul");
+            data.damage_relations.no_damage_from.forEach(type => {
+                const listItem = document.createElement("li");
+                listItem.innerText = type.name.toUpperCase();
+                noDamageList.appendChild(listItem);
+            });
+            noDamageContainer.appendChild(noDamageList);
+
+            // Total Pokémon with This Type
+            const totalPokemon = data.pokemon.length;
+            document.getElementById("total-pokemon").innerText = `Total Pokémon: ${totalPokemon}`;
+
+            // Total Moves of This Type
+            const totalMoves = data.moves.length;
+            document.getElementById("total-moves").innerText = `Total Moves: ${totalMoves}`;
+
+            // Gym Leader (for simplicity, using a basic check or static value for Gym Leaders)
+            const gymLeader = getGymLeaderForType(data.name);
+            document.getElementById("gym-leader").innerText = gymLeader || "Not Available";
+
+            // Female Ratio (dummy data or could be extracted from the Pokémon API)
+            const femaleRatio = getFemaleRatioForType(data.name);
+            document.getElementById("female-ratio").innerText = femaleRatio || "Not Available";
+
+// Add Type Image
+            const typeImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/${data.name}.png`;
+            document.getElementById("type-img").src = typeImageUrl;
+            
+            // Add Pokémon with this Type
+            const pokemonListContainer = document.getElementById("pokemon-list");
+            data.pokemon.forEach(pokemonEntry => {
+              const pokemonCard = document.createElement("div");
+              pokemonCard.classList.add("pokemon-card");
+            
+              const pokemonName = pokemonEntry.pokemon.name;
+              const pokemonId = pokemonEntry.pokemon.url.split("/")[6]; // Extract ID from the URL
+              const pokemonImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+            
+              const pokemonImage = document.createElement("img");
+              pokemonImage.src = pokemonImageUrl;
+              pokemonImage.alt = pokemonName;
+            
+              const pokemonLink = document.createElement("a");
+              pokemonLink.href = `pokemon.html?name=${pokemonName}`;
+              pokemonLink.innerText = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+            
+              pokemonCard.appendChild(pokemonImage);
+              pokemonCard.appendChild(pokemonLink);
+            
+              pokemonListContainer.appendChild(pokemonCard);
+            });
+            }
+            
+            // Dummy function to fetch gym leader information (can be replaced with actual data)
+            function getGymLeaderForType(type) {
+              const gymLeaders = {
+                fire: "Blaine",
+                water: "Misty",
+                grass: "Erika",
+                electric: "Lt. Surge",
+                psychic: "Sabrina",
+                // Add more gym leaders here as needed
+              };
+              return gymLeaders[type.toLowerCase()] || "Not Available";
+            }
+            
+            // Dummy function to fetch female ratio information (can be replaced with actual data)
+            function getFemaleRatioForType(type) {
+              const femaleRatios = {
+                fire: "87.5%",
+                water: "50%",
+                grass: "50%",
+                electric: "50%",
+                psychic: "50%",
+                // Add more ratios here as needed
+              };
+              return femaleRatios[type.toLowerCase()] || "Not Available";
+            }
+            
+            // Fetch data for the selected type
+            if (typeName) {
+              fetchTypeData(typeName);
+            } else {
+              document.getElementById("type-name").innerText = "Type Not Found";
+            }
+            </script> </body> </html>

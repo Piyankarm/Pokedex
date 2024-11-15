@@ -1,0 +1,195 @@
+body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        img {
+            width: 250px;
+            height: 250px;
+        }
+        .section {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            justify-content: flex-start;
+        }
+        .stats-bar div {
+            height: 15px;
+            border-radius: 5px;
+            margin-left: 10px;
+            text-align: left;
+        }
+        .stats-bar span {
+            margin-left: 10px;
+        }
+        /* Color coding for stat bars */
+        .low { background-color: red; }
+        .medium { background-color: orange; }
+        .high { background-color: yellow; }
+        /* Type color containers */
+       /* General styling for Pokémon type links */
+/* General styling for Pokémon type links */
+.pokemon-type {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 2px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* Type Colors */
+.normal { background-color: #A8A878; }  /* Normal type */
+.fighting { background-color: #D00000; }  /* Fighting type */
+.flying { background-color: #A890F0; }  /* Flying type */
+.poison { background-color: #A040A0; }  /* Poison type */
+.ground { background-color: #E0C068; }  /* Ground type */
+.rock { background-color: #B6A136; }  /* Rock type */
+.bug { background-color: #A8B820; }  /* Bug type */
+.ghost { background-color: #705898; }  /* Ghost type */
+.steel { background-color: #B8B8D0; }  /* Steel type */
+.fire { background-color: #F08030; }  /* Fire type */
+.water { background-color: #6390F0; }  /* Water type */
+.grass { background-color: #7AC74C; }  /* Grass type */
+.electric { background-color: #F7D02C; }  /* Electric type */
+.psychic { background-color: #F95587; }  /* Psychic type */
+.ice { background-color: #98D8D8; }  /* Ice type */
+.dragon { background-color: #6F35FC; }  /* Dragon type */
+.dark { background-color: #705848; }  /* Dark type */
+.fairy { background-color: #EE99AC; }  /* Fairy type */
+*/
+
+/* Special cases for types with more intense color variation */
+.fairy { background-color: #EE99AC; }  /* Fairy type (light pink) */
+/* Add other types here... */
+    
+    #alternate-forms {
+    margin: 10px 0;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    width: 80px; /* Fixed width for labels */
+    font-weight: bold;
+    text-align: left;
+}
+
+.bar-container {
+    flex-grow: 1;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: 0 10px; /* Space between label and stat value */
+    position: relative;
+}
+
+.stat-bar {
+    height: 100%;
+    border-radius: 5px;
+}
+
+.stat-value {
+    width: 40px; /* Fixed width for alignment */
+    text-align: right;
+    font-weight: bold;
+}
+
+.stat-total {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+    color: #333;
+}
+.nav-button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 14px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #212529;
+    font-weight: bold;
+}
+
+.nav-button:hover {
+    background-color: #e2e6ea;
+}
+
+.nav-button:disabled {
+    background-color: #dee2e6;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+#evolution-chain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.evolution-step {
+    text-align: center;
+}
+
+.evolution-image {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.evolution-image:hover {
+    transform: scale(1.1);
+    border-color: #ffcc00;
+}
+
+.evolution-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.evolution-arrow {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+.arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.evolution-requirement {
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #888;
+}
